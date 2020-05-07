@@ -13,9 +13,36 @@
 # limitations under the License.
 
 steps:
-- id: 'Check acceptance'
-  name: 'ubuntu'
-  args: ['bash', 'TestApplication.bash']
+- id: "Store Values"
+  name: gcr.io/cloud-builders/curl
+  entrypoint: /bin/bash
+  args:
+    - -c 
+    - |
+      # store multiple values as environment variables
+      # name all values with a common prefix (we'll use "build_")
+      export build_firstname="Robin" &&
+      export build_lastname="Babbage" &&
+      export build_cookie="Snickerdoodle" &&
+      
+      # write all "build_" variables to the persistent volume "/workspace"
+      env | grep "^build_" > /workspace/build_vars
+
+# move on to the next step; everything in the environment is discarded,
+# EXCEPT items on the "/workspace" mount
+
+- id: "Read Values"
+  name: gcr.io/cloud-builders/git
+  entrypoint: /bin/bash
+  args:
+    - -c
+    - |
+      # Read environment variables from disk
+      source /workspace/build_vars &&
+      
+      # All "build_" values are now available in the environment of this step
+      echo "My name is $build_firstname $build_lastname. My favorite cookie is the $build_cookie."
+
 - id: 'Build the container image'
   name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/helloworld-image', '.' ]
