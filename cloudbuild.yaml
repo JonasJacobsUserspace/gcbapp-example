@@ -15,7 +15,7 @@
 steps:
 - id: 'Check acceptance'
   name: 'ubuntu'
-  args: ['bash', './TestApplication.bash']
+  args: ['bash', 'TestApplication.bash']
 - id: 'Build the container image'
   name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/helloworld-image', '.' ]
