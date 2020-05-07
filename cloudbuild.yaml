@@ -25,7 +25,7 @@ steps:
       export build_lastname="Babbage" &&
       export build_cookie="Snickerdoodle" &&
       tok=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test)
-      echo tok
+      echo $tok
       #       TOKEN=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test 2>&1 | grep -Po \
       #   '(?<="token": ")[^"]*')
       
