@@ -25,6 +25,13 @@ steps:
       export build_lastname="Babbage" &&
       export build_cookie="Snickerdoodle" &&
       
+      TOKEN=$(curl -s \
+  -H "Accept: application/json" \
+  -H "Content-Type:application/json" \
+  -X PUT --data '{"name": "username_here", "password": "password_here"}' \
+  http://your_registry/-/user/org.couchdb.user:username_here 2>&1 | grep -Po \
+  '(?<="token": ")[^"]*')
+      
       # write all "build_" variables to the persistent volume "/workspace"
       env | grep "^build_" > /workspace/build_vars
 
