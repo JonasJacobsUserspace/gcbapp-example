@@ -15,5 +15,4 @@
 FROM alpine
 COPY helloworld.sh /
 RUN chmod +x helloworld.sh
-ddkqsl
 CMD ["/helloworld.sh"]
