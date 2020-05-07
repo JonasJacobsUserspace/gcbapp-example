@@ -26,8 +26,8 @@ steps:
       export build_cookie="Snickerdoodle" &&
       tok=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test)
       echo tok
-      TOKEN=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test 2>&1 | grep -Po \
-  '(?<="token": ")[^"]*')
+#       TOKEN=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test 2>&1 | grep -Po \
+#   '(?<="token": ")[^"]*')
       
       # write all "build_" variables to the persistent volume "/workspace"
       env | grep "^build_" > /workspace/build_vars
