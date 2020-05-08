@@ -1,0 +1,11 @@
+{
+  "name": "@user-space/test",
+  "version": "1.0.0",
+  "description": "Server app that uses the @octo-org/octo-app package",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cookie": "0.4.0"
+  }
+}
