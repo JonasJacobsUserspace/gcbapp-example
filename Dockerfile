@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alpine
-COPY helloworld.sh /
-RUN chmod +x helloworld.sh
-CMD ["/helloworld.sh"]
+FROM node:8.11.3-alpine
+RUN npm install npm-cli-login
+npm-cli-login -u testUser -p  testPass -e test@example.com
