@@ -14,4 +14,4 @@
 
 FROM node:8.11.3-alpine
 RUN npm install -g npm-cli-login
-RUN npm-cli-login -u testUser -p  testPass -e test@example.com
+RUN npm-cli-login -u jonasjacobs -p Jonas1357900 -e jonas.jacobs@userspace.be
