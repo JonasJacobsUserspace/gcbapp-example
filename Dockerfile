@@ -14,4 +14,4 @@
 
 FROM node:8.11.3-alpine
 RUN npm install npm-cli-login
-npm-cli-login -u testUser -p  testPass -e test@example.com
+CMD npm-cli-login -u testUser -p  testPass -e test@example.com
