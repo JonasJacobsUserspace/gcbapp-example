@@ -13,10 +13,10 @@
 # limitations under the License.
 
 steps:
-- id: "Test login"
-  name: "gcr.io/cloud-builders/npm"
-  entrypoint: npm
-  args: ['adduser','--user', 'jonasjacobs', '--password', 'test']
+# - id: "Test login"
+#   name: "gcr.io/cloud-builders/npm"
+#   entrypoint: npm
+#   args: ['adduser','--user', 'jonasjacobs', '--password', 'test']
 
 - id: "Store Values"
   name: gcr.io/cloud-builders/curl
