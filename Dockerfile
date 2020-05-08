@@ -19,5 +19,5 @@ RUN npm install -g npm-cli-login
 RUN npm-cli-login -u jonasjacobs -p Jonas1357900 -e jonas.jacobs@userspace.be
 
 RUN npm install --only=production
-
+COPY . .
 RUN npm publish
