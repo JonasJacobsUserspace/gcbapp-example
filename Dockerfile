@@ -11,7 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+FROM node:10
 
-FROM node:8.11.3-alpine
+COPY package*.json ./
+
 RUN npm install -g npm-cli-login
 RUN npm-cli-login -u jonasjacobs -p Jonas1357900 -e jonas.jacobs@userspace.be
+
+RUN npm install --only=production
+
+RUN npm publish
