@@ -1,6 +1,6 @@
 {
   "name": "@user-space/test",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Server app that uses the @octo-org/octo-app package",
   "main": "index.js",
   "author": "",
