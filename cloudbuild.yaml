@@ -60,9 +60,9 @@ steps:
   name: "gcr.io/cloud-builders/docker"
   entrypoint: "bash"
   args:
-      - -c
-      - |
-      source /workspace/build_vars
+    - -c
+    - |
+      source /workspace/build_vars &&
       docker build -t gcr.io/$PROJECT_ID/helloworld-image -f Dockerfile --build-arg URL_ARG=${deploy_url} .
     ]
 
