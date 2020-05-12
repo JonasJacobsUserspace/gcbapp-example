@@ -11,8 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-ARG URL_ARG
 FROM node:10
+ARG URL_ARG
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN echo $URL_ARG
