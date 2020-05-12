@@ -32,6 +32,8 @@ steps:
       npm ls
       tok=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test)
       echo $tok
+      url=$(gcloud run services describe smartlockshop-backend-staging --platform managed --region europe-west1 --format 'value(status.url)')
+      echo $url
       #       TOKEN=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test 2>&1 | grep -Po \
       #   '(?<="token": ")[^"]*')
       
