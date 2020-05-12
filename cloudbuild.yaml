@@ -19,7 +19,7 @@ steps:
 #   args: ['adduser','--user', 'jonasjacobs', '--password', 'test']
 - id: "Test script"
   name: 'gcr.io/cloud-builders/npm'
-  args: ['npm', 'run', 'test']
+  args: ['run', 'test']
 - id: "Store Values"
   name: gcr.io/cloud-builders/curl
   entrypoint: /bin/bash
