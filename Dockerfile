@@ -12,9 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 FROM node:10
-ARG URL_ARG
 WORKDIR /usr/src/app
 COPY package*.json ./
+ARG URL_ARG
 RUN echo $URL_ARG
 RUN npm install --only=production
 COPY . .
