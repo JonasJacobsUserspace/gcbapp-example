@@ -39,7 +39,7 @@ steps:
       #   '(?<="token": ")[^"]*')
       
       # write all "build_" variables to the persistent volume "/workspace"
-      env | grep "^build_" > /workspace/build_vars
+      #  env | grep "^build_" > /workspace/build_vars
 
 # move on to the next step; everything in the environment is discarded,
 # EXCEPT items on the "/workspace" mount
@@ -63,7 +63,7 @@ steps:
     - -c
     - |
       source /workspace/build_vars &&
-      docker build -t gcr.io/$PROJECT_ID/helloworld-image -f Dockerfile --build-arg URL_ARG=${deploy_url} .
+      docker build -t gcr.io/$PROJECT_ID/helloworld-image -f Dockerfile --build-arg URL_ARG=$deploy_url .
 
 - id: 'Publish the container image to npm registry'
   name: "gcr.io/cloud-builders/docker"
