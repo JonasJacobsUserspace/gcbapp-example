@@ -20,7 +20,8 @@ steps:
     - "-c"
     - |
       url=$(gcloud run services describe smartlockshop-backend-staging --platform managed --region europe-west1 --format 'value(status.url)')
-      echo $url
+      export deploy_url=$url
+      env | grep "^deploy_" > /workspace/build_vars
 - id: "Store Values"
   name: gcr.io/cloud-builders/curl
   entrypoint: /bin/bash
@@ -59,9 +60,10 @@ steps:
   name: "gcr.io/cloud-builders/docker"
   entrypoint: "bash"
   args:
-    [
-      "-c",
-      "docker build -t gcr.io/$PROJECT_ID/helloworld-image -f Dockerfile .",
+      - -c
+      - |
+      source /workspace/build_vars
+      docker build -t gcr.io/$PROJECT_ID/helloworld-image -f Dockerfile --build-arg URL_ARG=${deploy_url} .
     ]
 
 - id: 'Publish the container image to npm registry'
