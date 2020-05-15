@@ -71,7 +71,7 @@ steps:
   args:
     [
       "-c",
-      "if [ $BRANCH_NAME = 'master' ]; then docker build -t gcr.io/$PROJECT_ID/helloworld-image-publish -f Dockerfile.publish --build-arg PROJECT_ID_ARG=${PROJECT_ID} . ; fi",
+      "if [ $BRANCH_NAME = 'master' ]; then docker build -t gcr.io/$PROJECT_ID/helloworld-image-publish -f Dockerfile.publish --build-arg PROJECT_ID_ARG=${PROJECT_ID} . ;else echo 'Skipped, because $BRANCH_NAME is not the production branch'  fi",
     ]
     
 - id: 'Run the container image' 
