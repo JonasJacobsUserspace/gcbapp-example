@@ -13,48 +13,39 @@
 # limitations under the License.
 
 steps:
-- id: "Store url"
-  name: 'gcr.io/cloud-builders/gcloud'
-  entrypoint: "bash"
-  args:
-    - "-c"
-    - |
-      url=$(gcloud run services describe smartlockshop-backend-staging --platform managed --region europe-west1 --format 'value(status.url)')
-      export deploy_url=$url
-      env | grep "^deploy_" > /workspace/build_vars
-- id: "Store Values"
-  name: gcr.io/cloud-builders/curl
-  entrypoint: /bin/bash
-  args:
-    - -c 
-    - |
-      # store multiple values as environment variables
-      # name all values with a common prefix (we'll use "build_")
-      export build_firstname="Robin" &&
-      export build_lastname="Babbage" &&
-      export build_cookie="Snickerdoodle"
-      tok=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test)
-      echo $tok
-      #       TOKEN=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test 2>&1 | grep -Po \
-      #   '(?<="token": ")[^"]*')
+# - id: "Store Values"
+#   name: gcr.io/cloud-builders/curl
+#   entrypoint: /bin/bash
+#   args:
+#     - -c 
+#     - |
+#       # store multiple values as environment variables
+#       # name all values with a common prefix (we'll use "build_")
+#       export build_firstname="Robin" &&
+#       export build_lastname="Babbage" &&
+#       export build_cookie="Snickerdoodle"
+#       tok=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test)
+#       echo $tok
+#       #       TOKEN=$(curl -s -H "Accept: application/json" -H "Content-Type:application/json" -X PUT --data '{"name": "jonasjacobs", "password": "password_here"}' https://skimdb.npmjs.com/-/user/org.couchdb.user:test 2>&1 | grep -Po \
+#       #   '(?<="token": ")[^"]*')
       
-      # write all "build_" variables to the persistent volume "/workspace"
-      #  env | grep "^build_" > /workspace/build_vars
+#       # write all "build_" variables to the persistent volume "/workspace"
+#       #  env | grep "^build_" > /workspace/build_vars
 
 # move on to the next step; everything in the environment is discarded,
 # EXCEPT items on the "/workspace" mount
 
-- id: "Read Values"
-  name: gcr.io/cloud-builders/git
-  entrypoint: /bin/bash
-  args:
-    - -c
-    - |
-      # Read environment variables from disk
-      source /workspace/build_vars &&
+# - id: "Read Values"
+#   name: gcr.io/cloud-builders/git
+#   entrypoint: /bin/bash
+#   args:
+#     - -c
+#     - |
+#       # Read environment variables from disk
+#       source /workspace/build_vars &&
       
-      # All "build_" values are now available in the environment of this step
-      echo "My name is $build_firstname $build_lastname. My favorite cookie is the $build_cookie."
+#       # All "build_" values are now available in the environment of this step
+#       echo "My name is $build_firstname $build_lastname. My favorite cookie is the $build_cookie."
 
 - id: "Build the container image"
   name: "gcr.io/cloud-builders/docker"
@@ -63,7 +54,30 @@ steps:
     - -c
     - |
       source /workspace/build_vars &&
-      docker build -t gcr.io/$PROJECT_ID/helloworld-image -f Dockerfile --build-arg URL_ARG=$deploy_url .
+      docker build -t gcr.io/$PROJECT_ID/helloworld-image -f Dockerfile .
+
+- id: 'Deploy container image to Cloud Run test' 
+  name: 'gcr.io/cloud-builders/gcloud'
+  args: 
+    [
+      'run', 'deploy', 'helloworld', 
+      '--platform', 'managed',
+      '--image', 'gcr.io/$PROJECT_ID/helloworld-image',
+      '--region', 'europe-west1',
+      '--allow-unauthenticated'
+    ]
+  env:
+  - 'PORT=8080'
+  
+- id: "Store deploy url of test run"
+  name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: "bash"
+  args:
+    - "-c"
+    - |
+      url=$(gcloud run services describe helloworld --platform managed --region europe-west1 --format 'value(status.url)')
+      export deploy_url=$url
+      env | grep "^deploy_" > /workspace/build_vars
 
 - id: "Run tests on container"
   name: "gcr.io/cloud-builders/docker"
@@ -71,7 +85,8 @@ steps:
   args:
     - -c
     - |
-      docker build -t gcr.io/$PROJECT_ID/helloworld-image-test -f Dockerfile.test --build-arg PROJECT_ID_ARG=${PROJECT_ID} .
+      source /workspace/build_vars &&
+      docker build -t gcr.io/$PROJECT_ID/helloworld-image-test -f Dockerfile.test --build-arg PROJECT_ID_ARG=${PROJECT_ID} --build-arg URL_ARG=$deploy_url .
 
 - id: 'Publish the container image to npm registry if production branch'
   name: "gcr.io/cloud-builders/docker"
