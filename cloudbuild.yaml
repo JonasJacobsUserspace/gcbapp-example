@@ -80,4 +80,3 @@ steps:
 
 images:
 - 'gcr.io/$PROJECT_ID/helloworld-image'
-- 'gcr.io/$PROJECT_ID/helloworld-image-publish'
