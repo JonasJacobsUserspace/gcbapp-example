@@ -8,5 +8,6 @@ COPY tests tests
 ENV NODE_ENV dev
 
 RUN npm install
+COPY . .
 
 RUN npm run test:mocha
