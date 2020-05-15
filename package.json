@@ -1,14 +1,24 @@
 {
 	"name": "@user-space/test",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"description": "Server app that uses the @octo-org/octo-app package",
-	"main": "index.js",
-	"author": "",
+	"main": "src/index.js",
+	"author": "Jonas Jacobs",
+  "keywords": [
+    "testing",
+    "docker"
+  ],
 	"license": "MIT",
 	"scripts": {
-		"test": "bash ./scripts/test.bash"
+		"test": "bash ./scripts/test.bash",
+		    "start": "node app.js",
+    "test:mocha": "mocha tests/test.js"
 	},
-	"dependencies": {
-		"cookie": "0.4.0"
-	}
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "supertest": "^2.0.1"
+  }
 }
