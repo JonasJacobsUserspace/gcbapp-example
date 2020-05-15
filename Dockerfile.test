@@ -10,4 +10,4 @@ ENV NODE_ENV dev
 RUN npm update && \
     npm install -g mocha
 
-RUN npm test:mocha
+RUN npm run test:mocha
