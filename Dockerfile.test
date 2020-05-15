@@ -1,5 +1,9 @@
 ARG PROJECT_ID_ARG
 FROM gcr.io/$PROJECT_ID_ARG/helloworld-image
+
+ARG URL_ARG
+RUN echo $URL_ARG
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
