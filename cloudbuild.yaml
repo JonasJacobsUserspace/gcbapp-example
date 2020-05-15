@@ -97,7 +97,6 @@ steps:
     [
       'run', 'services', 'delete', 'helloworld',
       '--platform', 'managed',
-      '--image', 'gcr.io/$PROJECT_ID/helloworld-image',
       '--region', 'europe-west1',
     ]
   env:
