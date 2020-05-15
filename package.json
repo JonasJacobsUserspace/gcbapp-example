@@ -11,7 +11,7 @@
 	"license": "MIT",
 	"scripts": {
 		"test": "bash ./scripts/test.bash",
-		    "start": "node app.js",
+		    "start": "NODE_ENV=production node src/app.js",
     "test:mocha": "mocha tests/test.js"
 	},
   "dependencies": {
