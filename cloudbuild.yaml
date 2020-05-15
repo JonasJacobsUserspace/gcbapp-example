@@ -99,7 +99,6 @@ steps:
       '--platform', 'managed',
       '--image', 'gcr.io/$PROJECT_ID/helloworld-image',
       '--region', 'europe-west1',
-      '--allow-unauthenticated'
     ]
   env:
   - 'PORT=8080'
