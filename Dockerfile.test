@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 COPY tests tests
-ENV NODE_ENV dev
+ENV NODE_ENV test
 
 RUN npm install
 COPY . .
