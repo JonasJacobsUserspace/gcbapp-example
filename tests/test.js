@@ -1,6 +1,6 @@
 var request = require('supertest');
 
-var app = require('../src/app').app;
+var app = require('../src/app');
 
 describe('Calculator unit tests', function(){
     it("happy case add", function(done){
