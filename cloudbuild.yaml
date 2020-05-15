@@ -95,7 +95,7 @@ steps:
   name: 'gcr.io/cloud-builders/gcloud'
   args: 
     [
-      'run', 'delete', 'helloworld'
+      'run', 'services', 'delete', 'helloworld'
     ]
   env:
   - 'PORT=8080'
