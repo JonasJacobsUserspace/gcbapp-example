@@ -14,7 +14,6 @@
 FROM node:10
 WORKDIR /usr/src/app
 COPY package*.json ./
-ARG URL_ARG
-RUN echo $URL_ARG
+
 RUN npm install --only=production
 COPY . .
